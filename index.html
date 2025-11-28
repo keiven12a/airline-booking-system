@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-i18n="system_title">Airline Booking System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="">
+    <!-- Language Switcher -->
+    <div class="language-switcher">
+        <button class="lang-btn" onclick="switchLanguage('am')">አማርኛ</button>
+        <button class="lang-btn active" onclick="switchLanguage('en')">English</button>
+    </div>
+
+    <div class="container">
+        <!-- Main Menu -->
+        <div id="main-menu" class="screen active">
+            <div class="airline-logo">
+                <div class="airline-logo-icon">AE</div>
+                <div>
+                    <div class="airline-logo-text">ETHIOPIAN AIRLINES</div>
+                    <div class="airline-tagline">THE NEW EXPERIENCE</div>
+                </div>
+            </div>
+
+            <div class="main-menu-welcome">
+                <h1 data-i18n="main_title">Ethiopian Airlines</h1>
+                <p data-i18n="main_subtitle">Book your flight with Africa's leading airline</p>
+            </div>
+            <div class="menu-options">
+                <button class="btn btn-primary" onclick="showScreen('passenger-register')" data-i18n="passenger_register">Passenger Registration</button>
+                <button class="btn btn-secondary" onclick="showScreen('passenger-login')" data-i18n="passenger_login">Passenger Login</button>
+                <button class="btn btn-secondary" onclick="showScreen('admin-login')" data-i18n="admin_login">Admin Login</button>
+                
+                <!-- Reset System Button -->
+                <button class="btn btn-danger" onclick="resetSystem()" style="margin-top: 20px; background: linear-gradient(135deg, #dc3545, #c82333);" data-i18n="reset_system">🗑️ Reset System (Clear All Data)</button>
+            </div>
+            <div class="existing-users">
+                <h3 data-i18n="existing_users">Existing Users:</h3>
+                <div id="existing-passengers"><p class="message info">No passengers registered yet.</p></div>
+                <div id="existing-admins"><h4>Admins:</h4><div class="user-list">
+                <div class="user-item">
+                    <span class="user-info">RESPECT_WORLD</span>
+                    <button class="quick-login-btn" onclick="quickLoginAdmin('RESPECT_WORLD')">
+                        Quick Login
+                    </button>
+                </div>
+            </div></div>
+            </div>
+        </div>
+
+        <!-- Passenger Registration -->
+        <div id="passenger-register" class="screen">
+            <div class="airline-logo">
+                <div class="airline-logo-icon">AE</div>
+                <div>
+                    <div class="airline-logo-text">ETHIOPIAN AIRLINES</div>
+                    <div class="airline-tagline">THE NEW EXPERIENCE</div>
+                </div>
+            </div>
+            <div class="header">
+                <h2 data-i18n="passenger_register">Passenger Registration</h2>
+                <button class="btn btn-back" onclick="showScreen('main-menu')" data-i18n="back">← Back</button>
+            </div>
+            <form class="form" onsubmit="registerPassenger(event)">
+                <div class="form-group">
+                    <label for="passenger-name" data-i18n="full_name">Full Name</label>
+                    <input type="text" id="passenger-name" data-i18n-placeholder="full_name" required="" placeholder="Full Name">
+                </div>
+                   <div class="form-group">
+                       <label for="passenger-username" data-i18n="username">Username</label>
+                       <input type="text" id="passenger-username" data-i18n-placeholder="username" required="" placeholder="Username">
+                   </div>
+                <div class="form-group">
+                    <label for="passenger-gender" data-i18n="gender">Gender</label>
+                    <select id="passenger-gender" required="">
+                        <option value="" disabled selected>Choose your gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="passenger-age" data-i18n="age">Age</label>
+                    <input type="number" id="passenger-age" data-i18n-placeholder="age" required="" placeholder="Enter your age" min="0" max="120">
+                </div>
+                <div class="form-group">
+                    <label for="passenger-email" data-i18n="email">Email</label>
+                    <input type="email" id="passenger-email" data-i18n-placeholder="youremail@email.com"  placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label for="passenger-passport" data-i18n="passport_number">Passport Number</label>
+                    <input type="text" id="passenger-passport" data-i18n-placeholder="passport_number" required="" placeholder="Passport Number">
+                </div>
+                <div class="form-group">
+                    <label for="passenger-password" data-i18n="password">Password</label>
+                    <input type="password" id="passenger-password" data-i18n-placeholder="password" required="" placeholder="Password">
+                </div>
+                   <div class="form-group">
+                       <label for="passenger-confirm-password" data-i18n="confirm_password">Confirm Password</label>
+                       <input type="password" id="passenger-confirm-password" data-i18n-placeholder="confirm_password" required="">
+                   </div>
+                <button type="submit" class="btn btn-primary" data-i18n="register">Register</button>
+            </form>
+            <div class="form-footer">
+                <p data-i18n="have_account">Already have an account? <a href="#" onclick="showScreen('passenger-login')" data-i18n="login_here">Login here</a></p>
+            </div>
+            <div id="passenger-register-message" class="message"></div>
+        </div>
+
+        <!-- Passenger Login -->
+        <div id="passenger-login" class="screen login-screen">
+            <div class="airline-logo">
+                <div class="airline-logo-icon">AE</div>
+                <div>
+                    <div class="airline-logo-text">ETHIOPIAN AIRLINES</div>
+                    <div class="airline-tagline">THE NEW EXPERIENCE</div>
+                </div>
+            </div>
+            <div class="header">
+                <h2 data-i18n="passenger_login">Passenger Login</h2>
+                <button class="btn btn-back" onclick="showScreen('main-menu')" data-i18n="back">← Back</button>
+            </div>
+            <form class="form" onsubmit="loginPassenger(event)">
+                <div class="form-group">
+                        <label for="login-username" data-i18n="username">Username</label>
+                        <input type="text" id="login-username" data-i18n-placeholder="username" required="" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label for="login-password" data-i18n="password">Password</label>
+                    <input type="password" id="login-password" data-i18n-placeholder="password" required="" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary" data-i18n="login">Login</button>
+            </form>
+            <div class="form-footer">
+                <p data-i18n="no_account">Don't have an account? <a href="#" onclick="showScreen('passenger-register')" data-i18n="register_here">Register here</a></p>
+            </div>
+            <div class="quick-login">
+                <h4 data-i18n="quick_login">Quick Login (Existing Passengers):</h4>
+                <div id="passenger-quick-login"></div>
+            </div>
+            <div id="passenger-login-message" class="message"></div>
+        </div>
+
+        <!-- Admin Login -->
+        <div id="admin-login" class="screen login-screen">
+            <div class="airline-logo">
+                <div class="airline-logo-icon">AE</div>
+                <div>
+                    <div class="airline-logo-text">ETHIOPIAN AIRLINES</div>
+                    <div class="airline-tagline">THE NEW EXPERIENCE</div>
+                </div>
+            </div>
+            <div class="header">
+                <h2 data-i18n="admin_login">Admin Login</h2>
+                <button class="btn btn-back" onclick="showScreen('main-menu')" data-i18n="back">← Back</button>
+            </div>
+            <form class="form" onsubmit="loginAdmin(event)">
+                <div class="form-group">
+                    <label for="admin-login-username" data-i18n="username">Username</label>
+                    <input type="text" id="admin-login-username" data-i18n-placeholder="username" required="" placeholder="Username">
+                </div>
+                <div class="form-group">
+                    <label for="admin-login-password" data-i18n="password">Password</label>
+                    <input type="password" id="admin-login-password" data-i18n-placeholder="password" required="" placeholder="Password">
+                </div>
+                <button type="submit" class="btn btn-primary" data-i18n="login">Login</button>
+            </form>
+            <div class="quick-login">
+                <h4 data-i18n="quick_login_admin">Quick Login (Existing Admins):</h4>
+                <div id="admin-quick-login"></div>
+            </div>
+            <div id="admin-login-message" class="message"></div>
+        </div>
+
+        <!-- Passenger Dashboard -->
+        <div id="passenger-dashboard" class="screen">
+            <div class="airline-logo">
+                <div class="airline-logo-icon">AE</div>
+                <div>
+                    <div class="airline-logo-text">ETHIOPIAN AIRLINES</div>
+                    <div class="airline-tagline">THE NEW EXPERIENCE</div>
+                </div>
+            </div>
+            <div class="header">
+                <h2 data-i18n="passenger_dashboard">Passenger Dashboard</h2>
+                <div class="header-controls">
+                    <span id="passenger-welcome" data-i18n="welcome">Welcome!</span>
+                    <button class="btn btn-logout" onclick="logout()" data-i18n="logout">🚪 Logout</button>
+                </div>
+            </div>
+
+            <div class="dashboard-menu">
+                <button class="btn btn-primary" onclick="showPassengerSection('book-flight')" data-i18n="book_flight">Book Flight</button>
+                <button class="btn btn-secondary" onclick="showPassengerSection('search-flights')" data-i18n="search_flights">Search Flights</button>
+                <button class="btn btn-secondary" onclick="showPassengerSection('my-bookings')" data-i18n="my_bookings">My Bookings</button>
+            </div>
+
+            <!-- Book Flight Section -->
+            <div id="book-flight" class="section dashboard-section active">
+                <h3 data-i18n="available_flights">Available Flights</h3>
+                <div id="flights-list"></div>
+            </div>
+
+            <!-- Search Flights Section -->
+            <div id="search-flights" class="section dashboard-section">
+                <h3 data-i18n="search_flights">Search Flights</h3>
+                <div class="form-inline">
+                    <div class="form-group">
+                        <label for="search-from" data-i18n="from">From</label>
+                        <input type="text" id="search-from" data-i18n-placeholder="from" placeholder="From">
+                    </div>
+                    <div class="form-group">
+                        <label for="search-to" data-i18n="to">To</label>
+                        <input type="text" id="search-to" data-i18n-placeholder="to" placeholder="To">
+                    </div>
+                    <button class="btn btn-primary" onclick="searchFlights()" data-i18n="search">Search</button>
+                </div>
+                <div id="search-results"></div>
+            </div>
+
+            <!-- My Bookings Section -->
+            <div id="my-bookings" class="section dashboard-section">
+                <h3 data-i18n="my_bookings">My Bookings</h3>
+                <div id="my-bookings-list"></div>
+            </div>
+        </div>
+
+        <!-- Admin Dashboard -->
+        <div id="admin-dashboard" class="screen admin-dashboard">
+            <div class="airline-logo">
+                <div class="airline-logo-icon">AE</div>
+                <div>
+                    <div class="airline-logo-text">ETHIOPIAN AIRLINES</div>
+                    <div class="airline-tagline">THE NEW EXPERIENCE</div>
+                </div>
+            </div>
+            <div class="header">
+                <h2 data-i18n="admin_dashboard">Admin Dashboard</h2>
+                <div class="header-controls">
+                    <span id="admin-welcome" data-i18n="welcome_admin">Welcome, Admin!</span>
+                    <button class="btn btn-logout" onclick="logout()" data-i18n="logout">🚪 Logout</button>
+                </div>
+            </div>
+
+            <div class="dashboard-menu">
+                <button class="btn btn-primary" onclick="showAdminSection('add-flight')" data-i18n="add_flight">Add Flight</button>
+                <button class="btn btn-secondary" onclick="showAdminSection('manage-flights')" data-i18n="manage_flights">Manage Flights</button>
+                <button class="btn btn-secondary" onclick="showAdminSection('view-bookings')" data-i18n="view_bookings">View Bookings</button>
+                <button class="btn btn-warning" onclick="showAdminSection('statistics')" data-i18n="statistics">Statistics</button>
+            </div>
+
+            <!-- Add Flight Section -->
+            <div id="add-flight" class="section dashboard-section active">
+                <h3 data-i18n="add_new_flight">Add New Flight</h3>
+                <form class="form" onsubmit="addFlight(event)">
+                    <div class="form-group">
+                        <label for="flight-number" data-i18n="flight_number">Flight Number</label>
+                        <input type="text" id="flight-number" data-i18n-placeholder="flight_number" required="" placeholder="Flight Number">
+                    </div>
+                    <div class="form-group">
+                        <label for="flight-source" data-i18n="from">From</label>
+                        <input type="text" id="flight-source" data-i18n-placeholder="from" required="" placeholder="From">
+                    </div>
+                    <div class="form-group">
+                        <label for="flight-destination" data-i18n="to">To</label>
+                        <input type="text" id="flight-destination" data-i18n-placeholder="to" required="" placeholder="To">
+                    </div>
+                    <div class="form-group">
+                        <label for="flight-time" data-i18n="departure_time">Departure Time (HH:MM)</label>
+                        <input type="text" id="flight-time" data-i18n-placeholder="departure_time" required="" placeholder="Departure Time (HH:MM)">
+                    </div>
+                    <div class="form-group">
+                        <label for="flight-seats" data-i18n="seats_available">Seats Available</label>
+                        <input type="number" id="flight-seats" data-i18n-placeholder="seats_available" required="" placeholder="Seats Available">
+                    </div>
+                    <div class="form-group">
+                        <label for="flight-price" data-i18n="price">Price ($)</label>
+                        <input type="number" id="flight-price" data-i18n-placeholder="price" step="0.01" required="" placeholder="Price ($)">
+                    </div>
+                    <button type="submit" class="btn btn-primary" data-i18n="add_flight">Add Flight</button>
+                </form>
+                <div id="add-flight-message" class="message"></div>
+            </div>
+
+            <!-- Manage Flights Section -->
+            <div id="manage-flights" class="section dashboard-section">
+                <h3 data-i18n="manage_flights">Manage Flights</h3>
+                <div id="manage-flights-list"></div>
+            </div>
+
+            <!-- View Bookings Section -->
+            <div id="view-bookings" class="section dashboard-section">
+                <h3 data-i18n="all_bookings">All Bookings</h3>
+                <div id="all-bookings-list"></div>
+            </div>
+
+            <!-- Statistics Section -->
+            <div id="statistics" class="section dashboard-section">
+                <h3 data-i18n="flight_statistics">Flight Statistics</h3>
+                <div id="statistics-content"></div>
+            </div>
+        </div>
+
+        <!-- modals removed from here and placed after container to avoid clipping -->
+    </div>
+
+    <!-- Payment Modal (moved outside .container to ensure overlay visibility) -->
+    <!-- Seat Selection Modal (choose seat before payment) -->
+    <div id="seat-modal" class="modal" aria-hidden="true">
+        <div class="modal-content seat-modal-content ethiopian-seat-modal">
+            <div class="ethiopian-seat-modal-grid">
+                <!-- Left: Passengers -->
+                <div class="ethiopian-seat-modal-left">
+                    <div class="ethiopian-seat-modal-title">Passengers</div>
+                    <div class="ethiopian-seat-modal-passenger-list">
+                        <div class="ethiopian-seat-modal-passenger active">
+                            <span class="ethiopian-seat-modal-passenger-seat" id="seat-passenger-seat">A1</span>
+                            <span class="ethiopian-seat-modal-passenger-name" id="seat-passenger-name">respect-world keiven</span>
+                            <span class="ethiopian-seat-modal-select-seat">(select seat)</span>
+                        </div>
+                    </div>
+                    <div class="ethiopian-seat-modal-legend">
+                        <div class="ethiopian-seat-modal-legend-title">LEGEND</div>
+                        <div class="ethiopian-seat-modal-legend-items">
+                            <div class="ethiopian-seat-modal-legend-item"><span class="ethiopian-seat-modal-legend-box reserved"></span> Reserved Seat</div>
+                            <div class="ethiopian-seat-modal-legend-item"><span class="ethiopian-seat-modal-legend-box available"></span> Available Seat</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Center: Seat Map Only -->
+                <div class="ethiopian-seat-modal-center">
+                    <div class="ethiopian-seat-modal-seatmap-wrapper">
+                        <div class="ethiopian-seat-modal-seatmap-labels">
+                            <div class="ethiopian-seat-modal-seatmap-cols">
+                                <span>A</span>
+                                <span>B</span>
+                                <span>C</span>
+                                <span>J</span>
+                                <span>K</span>
+                                <span>L</span>
+                            </div>
+                        </div>
+                        <div id="ethiopian-seat-map" class="ethiopian-seat-modal-seatmap">
+                            <!-- Seat map grid will be rendered here by JS -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ethiopian-seat-modal-footer">
+                <button class="ethiopian-seat-modal-btn" id="ethiopian-seat-modal-continue">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="payment-modal" class="modal">
+        <div class="payment-modal-content">
+            <div class="payment-modal-header">
+                <h3 data-i18n="payment_for">Payment for <span id="payment-flight"></span></h3>
+            </div>
+            <div class="payment-modal-amount">
+                <p data-i18n="amount">Amount: $ <span id="payment-amount">0</span></p>
+            </div>
+            <div class="payment-modal-form">
+                <div class="form-group">
+                    <label for="card-number" data-i18n="card_number">Card Number</label>
+                    <input type="text" id="card-number" data-i18n-placeholder="card_number" maxlength="19" placeholder="Card Number">
+                    <small style="color: #666; font-size: 12px;">Enter 13-19 digit card number</small>
+                </div>
+                <div class="form-group">
+                    <label for="card-cvv" data-i18n="cvv">CVV</label>
+                    <input type="text" id="card-cvv" data-i18n-placeholder="cvv" maxlength="4" placeholder="CVV">
+                    <small style="color: #666; font-size: 12px;">Enter 3 or 4 digit CVV</small>
+                </div>
+                <div class="form-group">
+                    <label for="card-expiry" data-i18n="expiry_date">MM/YY</label>
+                    <input type="text" id="card-expiry" data-i18n-placeholder="expiry_date" maxlength="5" placeholder="MM/YY">
+                    <small style="color: #666; font-size: 12px;">Format: MM/YY (e.g., 12/25)</small>
+                </div>
+                <div class="payment-modal-actions">
+                    <button class="btn btn-success" onclick="processPayment()" data-i18n="pay_now">Pay Now</button>
+                    <button class="btn btn-back" onclick="closeModal()" data-i18n="cancel">Cancel</button>
+                </div>
+            </div>
+            <div id="payment-message" class="message"></div>
+        </div>
+    </div>
+
+    <!-- Manage Seats Modal (moved outside .container) -->
+    <div id="manage-seats-modal" class="modal">
+        <div class="modal-content">
+            <h3 data-i18n="update_seats">Update Seats <span id="manage-flight-number"></span></h3>
+            <div class="form">
+                <div class="form-group">
+                    <label for="new-seats" data-i18n="new_seats">New number of seats</label>
+                    <input type="number" id="new-seats" data-i18n-placeholder="new_seats" min="0" placeholder="New number of seats">
+                </div>
+                <button class="btn btn-warning" onclick="updateSeats()" data-i18n="update_seats">Update Seats</button>
+                <button class="btn btn-back" onclick="closeSeatsModal()" data-i18n="cancel">Cancel</button>
+            </div>
+            <div id="manage-seats-message" class="message"></div>
+        </div>
+    </div>
+
+    <!-- Airline Footer -->
+    <div class="airline-footer">
+        <div class="airline-contact">
+            <div class="airline-contact-item">
+                <span>📞</span> <span>+251 11 125 1010</span>
+            </div>
+            <div class="airline-contact-item">
+                <span>✉️</span> <span>customerservice@ethiopianairlines.com</span>
+            </div>
+            <div class="airline-contact-item">
+                <span>🌐</span> <span>www.ethiopianairlines.com</span>
+            </div>
+        </div>
+        <p>© 2025 Ethiopian Airlines. All rights reserved.</p>
+        <p>The Leading airline of Africa ✈️</p>
+    </div>
+
+    <script src="script.js"></script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+</body>
+</html>
