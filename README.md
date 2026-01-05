@@ -8,8 +8,8 @@ Ethiopian Airlines Booking System
 A modern, web-based flight booking system designed for Ethiopian Airlines, 
 featuring bilingual support and comprehensive management tools for both passengers and administrators.
 
- Features
-  Core Functionality
+      Features
+        Core Functionality
               - Passenger Registration & Login
              - Admin Authentication (Pre-configured admin account)
              - Flight Booking System
@@ -18,14 +18,15 @@ featuring bilingual support and comprehensive management tools for both passenge
              - Payment Processing
              - Multi-language Support (English & Amharic)
 
- User Roles
-      Passenger Features
-               -  User registration with passport details
-              -  Browse available flights
-              -  Search flights by route
-              -  Book flights with payment simulation
-              -  View personal booking history
-              -  Quick login for existing users
+
+            User Roles
+                 Passenger Features
+                      -  User registration with passport details
+                      -  Browse available flights
+                      -  Search flights by route
+                      -  Book flights with payment simulation
+                      -  View personal booking history
+                      -  Quick login for existing users
 
 
      Admin Features
@@ -37,11 +38,12 @@ featuring bilingual support and comprehensive management tools for both passenge
           -  Reset system functionality
  
 
-Quick Start
+    Quick Start
            Default Admin Credentials
                -Username: RESPECT_WORLD
               -Password: keiven12a
-           default passenger credential
+
+           default passenger credential
              - username: kb   
              - password: 12345
 
@@ -58,7 +60,8 @@ Quick Start
              9. Addis Ababa → Gambella (ET709)
              10. Addis Ababa → Jimma (ET710)
 
-Technical Details
+
+     Technical Details
          File Structure
           airline-booking-system/
                                                │
@@ -68,7 +71,7 @@ Quick Start
                                                └── README.md           # This documentation file
 
 
-Technologies Used
+    Technologies Used
                 - Frontend: HTML5, CSS3, JavaScript (ES6+)
                 - Storage: LocalStorage (Client-side data persistence)
                - Styling: CSS Grid, Flexbox, Gradient backgrounds
@@ -76,14 +79,14 @@ Technologies Used
               - Icons: Unicode emojis and symbols
 
 
- Browser Compatibility
+    Browser Compatibility
                           -  Chrome 
                          -  Firefox 
                          -  Safari 
                          -  Edge 
 
  
-Responsive Design
+    Responsive Design
        The application is fully responsive and works on:
                           -  Desktop computers
                          -  Mobile phones
@@ -91,7 +94,7 @@ Responsive Design
                          -  Large screens
 
 
-Language Support
+    Language Support
           Available Languages
                    - English (Default)
                    - Amharic (አማርኛ)
@@ -102,18 +105,18 @@ Language Support
                 - Bilingual form placeholders
 
  
-Installation & SetupLocal Development
+    Installation & SetupLocal Development
              1. Download all project files
              2. Open `index.html` in a web browser
              3. No server setup required - runs completely client-side
 
-Data Persistence
+    Data Persistence
            - All data is stored in browser's LocalStorage
            - Data persists between browser sessions
           - System reset option available in admin panel
 
 
-Design Features
+    Design Features
                Visual Elements
                    - Modern gradient backgrounds
                   - Card-based layouts
@@ -133,7 +136,7 @@ Design Features
                   - Input sanitization
                  - Secure data storage in LocalStorage
 
- Admin Dashboard Features
+    Admin Dashboard Features
             Flight Management
                     - Add new flights with complete details
                     - Update seat availability in real-time
@@ -146,7 +149,7 @@ Design Features
                 - Available seats overview
 
 
- Usage Instructions
+    Usage Instructions
          For Passengers
                  1. Register: Create a new passenger account
                  2. Login: Access your dashboard
@@ -162,7 +165,7 @@ Design Features
               5. Analyze: Check system statistics
  
 
-System Reset
+    System Reset
         Administrators can reset the entire system using the "Reset System" button, which will:
                 - Clear all passenger data
                 - Remove all bookings
@@ -170,17 +173,19 @@ System Reset
                - Maintain admin credentials
 
  
-Troubleshooting
+    Troubleshooting
          Common Issues
                  1. Data not saving: Check if LocalStorage is enabled in browser
                  2. Login issues: Verify correct credentials
                  3. Display problems: Ensure browser supports modern CSS features
                 4. Language not switching: Refresh page after language change
-Browser Requirements
+
+    Browser Requirements
               - JavaScript must be enabled
              - LocalStorage support required
              - Modern CSS support recommended
-Future Enhancements
+
+    Future Enhancements
          Potential features for future versions:
              - Email notifications
             - Advanced payment integration
@@ -191,14 +196,15 @@ Troubleshooting
            - Backend database integration
 
 
- Contributing
+    Contributing
         This is a standalone project. For modifications:
                1. Fork the project
                2. Make your changes
                3. Test thoroughly
               4. Submit improvements
 
-License
+    License
        This project is for educational and demonstration purposes.
 
-Note: This is a client-side application. For production use, consider implementing server-side validation and a proper database system.
+
+    Note: This is a client-side application. For production use, consider implementing server-side validation and a proper database system.
